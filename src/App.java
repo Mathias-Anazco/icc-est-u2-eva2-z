@@ -37,9 +37,7 @@ public class App {
         LibroController controller = new LibroController();
         Map<Book, Book> resultado = controller.procesarLibros(libros);
 
-        for (Map.Entry<Book, Book> entry : resultado.entrySet()) {
-            System.out.println("resultado: ");
-            System.out.println(entry.getKey());
-        }
+        System.out.println(" Resultado:");
+        resultado.forEach((k, v) -> System.out.println(k));
     }
 }

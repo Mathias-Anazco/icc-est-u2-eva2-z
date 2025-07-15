@@ -7,16 +7,22 @@ import java.util.*;
 public class LibroController {
 
     public Map<Book, Book> procesarLibros(List<Book> libros) {
-        Comparator<Book> comparador = Comparator
-                .comparing(Book::getTitulo, Comparator.reverseOrder())
-                .thenComparing(Book::getAnio);
+        Comparator<Book> comparador = (b1, b2) -> {
+            int cmpTitulo = b2.getTitulo().compareToIgnoreCase(b1.getTitulo());
+            if (cmpTitulo != 0) return cmpTitulo;
 
-        Set<Book> ordenados = new TreeSet<>(comparador);
-        ordenados.addAll(libros);
+            int cmpAnio = Integer.compare(b1.getAnio(), b2.getAnio());
+            if (cmpAnio != 0) return cmpAnio;
+
+            return 0;
+        };
+
+        Set<Book> setOrdenado = new TreeSet<>(comparador);
+        setOrdenado.addAll(libros);
 
         Map<Book, Book> resultado = new LinkedHashMap<>();
-        for (Book libro : ordenados) {
-            resultado.put(libro, libro);
+        for (Book libro : setOrdenado) {
+            resultado.put(libro, libro); // Clave y valor iguales
         }
 
         return resultado;
